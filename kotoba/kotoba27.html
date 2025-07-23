@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Card Kotoba Pelajaran 27 | obowkwk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/links.svg">
+    <meta name="theme-color" content="#010e29" />
+    <meta name="color-scheme" content="light" />
+    <meta name="keywords" content="Flash Card Kotoba Pelajaran 27 | obowkwk" />
+    <meta name="author" content="Flash Card Kotoba Pelajaran 27 | obowkwk" />
+    <meta name="title" content="Flash Card Kotoba Pelajaran 27 | obowkwk"/>
+    <meta name="description" content="Flash Card Kotoba Pelajaran 27 | obowkwk" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://fckotobamnn2.vercel.app" />
+    <meta property="og:author" content="Flash Card Kotoba Pelajaran 27 | obowkwk" />
+    <meta property="og:title" content="Flash Card Kotoba Pelajaran 27 | obowkwk" />
+    <meta property="og:description" content="Flash Card Kotoba Pelajaran 27 | obowkwk" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://fckotobamnn2.vercel.app" />
+    <meta property="twitter:title" content="Flash Card Kotoba Pelajaran 27 | obowkwk" />
+    <meta property="twitter:description" content="Flash Card Kotoba Pelajaran 27 | obowkwk" />
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-md mx-auto">
+
+        <!-- Tombol Kembali -->
+        <div class="mb-4">
+            <button id="back-btn" class="bg-white text-slate-600 py-2 px-4 rounded-lg shadow-md hover:bg-slate-100 transition-all btn-pulse">
+               <i class="fas fa-chevron-left mr-2"></i>Kembali
+           </button>
+       </div>
+
+        <header class="text-center mb-4">
+            <h1 class="text-2xl md:text-3xl font-bold text-slate-700">Pelajaran 27: Kotoba</h1>
+            <p class="text-slate-500">Klik kartu untuk melihat terjemahan.</p>
+        </header>
+
+        <!-- Kontainer Kartu -->
+        <div id="card-container" class="card-container h-64 md:h-72 mb-4 cursor-pointer">
+            <div id="card" class="card">
+                <!-- Sisi Depan Kartu (Jepang) -->
+                <div class="card-face card-front">
+                    <div class="text-center">
+                        <p id="kanji" class="japanese-text text-4xl md:text-5xl font-bold mb-2"></p>
+                        <p id="kana" class="japanese-text text-xl md:text-2xl text-slate-600"></p>
+                    </div>
+                </div>
+                <!-- Sisi Belakang Kartu (Indonesia) -->
+                <div class="card-face card-back">
+                    <p id="translation" class="text-2xl md:text-3xl font-semibold text-center"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-200 rounded-full h-2.5 mb-4">
+            <div id="progress-bar" class="bg-sky-500 h-2.5 rounded-full transition-all duration-500 ease-in-out"></div>
+        </div>
+        <p id="progress-text" class="text-center text-sm text-slate-500 mb-4">1 / 42</p>
+
+        <!-- Tombol Navigasi -->
+        <div class="grid grid-cols-3 gap-3 items-center">
+            <button id="prev-btn" class="bg-white text-slate-700 p-3 rounded-lg shadow-md hover:bg-slate-100 transition-all btn-pulse disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button id="flip-btn" class="bg-sky-500 text-white p-4 rounded-lg shadow-lg hover:bg-sky-600 transition-all btn-pulse font-bold">
+                Balik Kartu
+            </button>
+            <button id="next-btn" class="bg-white text-slate-700 p-3 rounded-lg shadow-md hover:bg-slate-100 transition-all btn-pulse">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        
+        <!-- Tombol Acak -->
+        <div class="text-center mt-4">
+            <button id="shuffle-btn" class="bg-teal-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-teal-600 transition-all btn-pulse">
+                <i class="fas fa-random mr-2"></i>Acak Kartu
+            </button>
+        </div>
+
+        <!-- Footer Hak Cipta -->
+    <footer class="text-center mt-8 pb-4">
+        <p id="copyright" class="text-xs text-slate-400"></p>
+    </footer>
+
+    </div>
+
+    <script>
+        const vocabulary = [
+            { kanji: "飼います", kana: "かいます", translation: "memelihara" }, //1
+            { kanji: "走ります [道を~]", kana: "はしります [みちを~]", translation: "berlari [jalan]" }, //2
+            { kanji: "見えます [山が~]", kana: "みえます [やまが~]", translation: "[gunung] terlihat" }, //3
+            { kanji: "聞こえます [音が~]", kana: "きこえます [おとが~]", translation: "[bunyi] terdengar" }, //4
+            { kanji: "できます [道が~]", kana: "[みちが~]", translation: "[jalan] dibuat" }, //5
+            { kanji: "開きます [教室を~]", kana: "ひらきます [きょうしつを~]", translation: "membuka/mengadakan [kelas]" }, //5
+            { kanji: "心配 [な]", kana: "しんぱい [な]", translation: "khawatir" }, //6
+            { kanji: "ペット", kana: "", translation: "hewan peliharaan" }, //7
+            { kanji: "鳥", kana: "とり", translation: "burung" }, //8
+            { kanji: "声", kana: "こえ", translation: "suara" }, //9
+            { kanji: "波", kana: "なみ", translation: "ombak, gelombang" }, //10
+            { kanji: "花火", kana: "はなび", translation: "kembang api" }, //11
+            { kanji: "道具", kana: "どうぐ", translation: "alat" }, //12
+            { kanji: "クリーニング", kana: "", translation: "laundry" }, //13
+            { kanji: "家", kana: "いえ", translation: "rumah" }, //14
+            { kanji: "マンション", kana: "", translation: "apartmen" }, //15
+            { kanji: "キッチン", kana: "", translation: "dapur" }, //16
+            { kanji: "~教室", kana: "~きょうしつ", translation: "~ les, ~ kelas" }, //17
+            { kanji: "パーティールーム", kana: "", translation: "ruang pesta" }, //18
+            { kanji: "方", kana: "かた", translation: "orang (kata hormat dari ひと)" }, //19
+            { kanji: "~後", kana: "~ご", translation: "setelah ~, sesudah ~" }, //20
+            { kanji: "~しか", kana: "", translation: "hanya ~ (dipakai bersama dengan kata bentuk negatif)" }, //21
+            { kanji: "ほかの", kana: "", translation: "lain" }, //22
+            { kanji: "はっきり", kana: "", translation: "jelas" }, //23
+            { kanji: "家具", kana: "かぐ", translation: "perabot rumah, mebel" }, //24
+            { kanji: "本棚", kana: "ほんだな", translation: "lemari buku" }, //25
+            { kanji: "いつか", kana: "", translation: "kapan-kapan" }, //26
+            { kanji: "建てます", kana: "たてます", translation: "membangun" }, //27
+            { kanji: "すばらしい", kana: "", translation: "bagus" }, //28
+            { kanji: "子どもたち", kana: "こどもたち", translation: "anak-anak" }, //29
+            { kanji: "大好き[な]", kana: "だいすき[な]", translation: "kesukaan" }, //30
+            { kanji: "主人公", kana: "しゅじんこう", translation: "pelaku utama" }, //31
+            { kanji: "不思議[な]", kana: "ふしぎ[な]", translation: "ajaib" }, //32
+            { kanji: "ポケット", kana: "", translation: "kantong" }, //33
+            { kanji: "例えば", kana: "たとえば", translation: "misalnya" }, //34
+            { kanji: "付けます", kana: "つけます", translation: "memasang" }, //35
+            { kanji: "自由に", kana: "じゆうに", translation: "dengan bebas" }, //36
+            { kanji: "空", kana: "そら", translation: "langit" }, //37
+            { kanji: "飛びます", kana: "とびます", translation: "terbang" }, //38
+            { kanji: "昔", kana: "むかし", translation: "dulu" }, //39
+            { kanji: "自分", kana: "じぶん", translation: "diri sendiri" }, //40
+            { kanji: "将来", kana: "しょうらい", translation: "masa depan" }, //41
+        ];
+
+         // --- Elemen DOM ---
+         const backBtn = document.getElementById('back-btn');
+        const cardContainer = document.getElementById('card-container');
+        const card = document.getElementById('card');
+        const kanjiEl = document.getElementById('kanji');
+        const kanaEl = document.getElementById('kana');
+        const translationEl = document.getElementById('translation');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const flipBtn = document.getElementById('flip-btn');
+        const shuffleBtn = document.getElementById('shuffle-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const copyrightEl = document.getElementById('copyright');
+
+        // --- State Aplikasi ---
+        let currentCardIndex = 0;
+        let isFlipped = false;
+        let vocabData = [...vocabulary]; // Salinan data untuk diacak
+
+        // --- Fungsi ---
+
+        /**
+         * Menampilkan kartu berdasarkan indeks saat ini.
+         */
+        function displayCard() {
+            if (!vocabData || vocabData.length === 0) {
+                console.error("Data kosakata tidak tersedia.");
+                return;
+            }
+            const word = vocabData[currentCardIndex];
+            kanjiEl.textContent = word.kanji;
+            kanaEl.textContent = word.kana;
+            translationEl.textContent = word.translation;
+
+            if (isFlipped) {
+                card.classList.remove('is-flipped');
+                isFlipped = false;
+            }
+            
+            updateProgress();
+            updateNavButtons();
+        }
+
+        /**
+         * Membalik kartu.
+         */
+        function flipCard() {
+            isFlipped = !isFlipped;
+            card.classList.toggle('is-flipped');
+        }
+
+        /**
+         * Memperbarui progress bar dan teks.
+         */
+        function updateProgress() {
+            const totalCards = vocabData.length;
+            if (totalCards === 0) return;
+            const progressPercentage = ((currentCardIndex + 1) / totalCards) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${currentCardIndex + 1} / ${totalCards}`;
+        }
+        
+        /**
+         * Mengaktifkan/menonaktifkan tombol navigasi.
+         */
+        function updateNavButtons() {
+            prevBtn.disabled = false;
+            nextBtn.disabled = false;
+        }
+
+        /**
+         * Mengacak urutan kartu menggunakan algoritma Fisher-Yates.
+         */
+        function shuffleCards() {
+            for (let i = vocabData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [vocabData[i], vocabData[j]] = [vocabData[j], vocabData[i]];
+            }
+            currentCardIndex = 0;
+            displayCard();
+        }
+        
+        /**
+         * Mengatur teks hak cipta dengan tahun saat ini.
+         */
+        function setCopyright() {
+            const currentYear = new Date().getFullYear();
+            copyrightEl.textContent = `©${currentYear}. obowkwk`;
+        }
+
+        // --- Event Listeners ---
+        backBtn.addEventListener('click', () => {
+            history.back();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentCardIndex = (currentCardIndex + 1) % vocabData.length;
+            displayCard();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentCardIndex = (currentCardIndex - 1 + vocabData.length) % vocabData.length;
+            displayCard();
+        });
+
+        flipBtn.addEventListener('click', flipCard);
+        cardContainer.addEventListener('click', flipCard);
+
+        shuffleBtn.addEventListener('click', shuffleCards);
+        
+        // --- Inisialisasi ---
+        displayCard();
+        setCopyright();
+
+
+    </script>
+</body>
+</html>
